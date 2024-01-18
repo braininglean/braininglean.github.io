@@ -73,7 +73,7 @@ const data = [
  {'SKU':'1030433', 'Description':'MICHELOB ULTRA, 355ML 24UC CAN NONSLEEK', 'Size':'400*268*124','IorD':'D' },
  {'SKU':'1030627', 'Description':'MICHELOB ULTRA, 58.6L 58.6PK KEG 6/PAL', 'Size':'395*395*590','IorD':'D' },
  {'SKU':'1030902', 'Description':'PR-MICHELOB ULTRA 355ML 24UC CAN GOLF', 'Size':'348*232*157','IorD':'D' },
- {'SKU':'1030921', 'Description':'PR-MICHELOB ULTRA RUN'22 355ML 24UC CAN', 'Size':'348*231*159','IorD':'D' },
+ {'SKU':'1030921', 'Description':'PR-MICHELOB ULTRA RUN 22 355ML 24UC CAN', 'Size':'348*231*159','IorD':'D' },
  {'SKU':'1030922', 'Description':'PR-MICHELOB ULTRA NBA PIN 355ML 24UC CAN', 'Size':'347*231*159','IorD':'D' },
  {'SKU':'1030927', 'Description':'PR-MICHELOB SMARTWATCH 355ML 24UC CAN', 'Size':'346*230*158','IorD':'D' },
  {'SKU':'1030948', 'Description':'PR-MICHELOB ULTRA ETW RUN 355ML 24UC CAN', 'Size':'347*231*158','IorD':'D' },
