@@ -1,6 +1,5 @@
-const data2 = [
+const data2 = [ 
    
- {'SKU':'1035424', 'Description':'BUDWEISER, 355ML 4X6UC CAN ALT CARTON', 'UPC':'70062067335340','Type':'saleable'},
  {'SKU':'1026135', 'Description':'KEITHS, 355ML 3X8C CAN CARTON', 'UPC':'62067121456','Type':'NEW'},
  {'SKU':'1042424', 'Description':'KOKANEE, 355ML 4X6UC CAN CARTON', 'UPC':'62067374340','Type':'NEW'},
  {'SKU':'2703424', 'Description':'KOOTENAY, 355ML 4X6UC CAN CARTON', 'UPC':'62067123344','Type':'NEW'},
@@ -13,6 +12,7 @@ const data2 = [
  {'SKU':'2341604', 'Description':'COORS ORIGINAL, 355ML 36DS CAN', 'UPC':'56327014534','Type':'saleable'},
  {'SKU':'1007097', 'Description':'BLUE MOON BELGIAN WHITE 473ML 6X4TC CAN', 'UPC':'70056327013741','Type':'saleable'},
  {'SKU':'1015051', 'Description':'BLACK ICE 710ML 12X710C CAN', 'UPC':'30056327008923','Type':'saleable'},
+ {'SKU':'1035424', 'Description':'BUDWEISER, 355ML 4X6UC CAN ALT CARTON', 'UPC':'70062067335340','Type':'saleable'},
  {'SKU':'1044135', 'Description':'LUCKY LAGER 355ML 3X8UC CAN', 'UPC':'70062067355348','Type':'saleable'},
  {'SKU':'1045135', 'Description':'BUSCH LAGER 355ML 3X8UC CAN', 'UPC':'70062067508454','Type':'saleable'},
  {'SKU':'1045436', 'Description':'BUSCH LAGER 740ML 12X1NC CAN (6LAY/PAL)', 'UPC':'70062067318718','Type':'saleable'},
@@ -37,8 +37,8 @@ const data2 = [
  {'SKU':'1873033', 'Description':'MILLER LITE 355ML 24UC CAN', 'UPC':'56327012127','Type':'saleable'},
  {'SKU':'1874053', 'Description':'MILLER GENUINE DRAFT 355ML 4X6UB BTL', 'UPC':'10056327012384','Type':'saleable'},
  {'SKU':'1874053', 'Description':'MILLER GENUINE DRAFT 355ML 4X6UB BTL', 'UPC':'56327012417','Type':'saleable'},
- {'SKU':'1907011', 'Description':'HEINEKEN 0.0 330ML 4X6EB BTL', 'UPC':'72890005854','Type':'saleable'},
- {'SKU':'2341051', 'Description':'COORS ORIGINAL, 710ML 12X710C CAN', 'UPC':'30056327014542','Type':'saleable'},
+ {'SKU':'1907011', 'Description':'HEINEKEN 0.0 330ML 4X6EB BTL', 'UPC':'72890005854','Type':'saleable'}, 
+ {'SKU':'2341051', 'Description':'COORS ORIGINAL, 710ML 12X710C CAN', 'UPC':'30056327014542','Type':'saleable'},   
  {'SKU':'2383185', 'Description':'LUCKY EXTRA 355ML 3X8C CAN', 'UPC':'62067825453','Type':'saleable'},
  {'SKU':'2480030', 'Description':'BLUE MOON LIGHT SKY 355ML 4X6UC CAN', 'UPC':'56327015500','Type':'saleable'},
  {'SKU':'2569001', 'Description':'BUDWEISER ZERO 341ML 4X6SB BTL', 'UPC':'70062067381552','Type':'saleable'},
