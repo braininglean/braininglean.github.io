@@ -39,10 +39,10 @@
                 <option value="classic.css">Classic</option>
                 <option value="clean.css">Clean</option>
             </select>
-            
+            <input type="button" value="CASE" id="btn20" style="float:right;" />  
            
             <div id="skulist"></div>
-           
+            <div id="upclist" style="display:none;" ></div>
         </section>
         
 
@@ -51,13 +51,28 @@
         <script src="plugins/ajaxpaging.js"></script>
         <script src="js/jquery.columns.min.js"></script>
         <script src="data.js"></script>
-        <script>
-            
-            var columns1 = $('#skulist').columns({
-                data: data
+        <script src="data2.js"></script>
+        <script>  
+            function my$(id) {
+                  return document.getElementById(id);
+                  }
+           my$("btn20").onclick=function(){
+           if(this.value=="CASE"){
+            my$("skulist").style.display="none";
+            my$("upclist").style.display="block";
+             this.value="UPC";
+             var columns1 = $('#skulist').columns({
+                data: data1
             });
-            
-         
+            }else if(this.value=="UPC"){
+            my$("skulist").style.display="block";
+            my$("upclist").style.display="none";
+                 this.value="CASE";
+              var columns2 = $('#upclist').columns({
+                data: data2
+            });
+                }
+               };
             $('#theme').change(function() {
                 $('#style').attr('href', '../css/'+$(this).val());
             })
