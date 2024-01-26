@@ -1,4 +1,4 @@
-const data = [
+const data1 = [
     {'SKU':'1003173', 'Description':'KEYSTONE ICE 355ML 15UC CAN', 'Attr':'335*200*125 18x12=216 100055 (MOL)','Type':'D C'},
  {'SKU':'1006030', 'Description':'RICKARDS RADLER 355ML 4X6UC CAN', 'Attr':'407*270*126 12x12=144 100055 (MOL)','Type':'D C'},
  {'SKU':'1006031', 'Description':'RICKARDS RADLER 355ML 12UC CAN', 'Attr':'267*199*123 24x12=288 100055 (MOL)','Type':'D C'},
