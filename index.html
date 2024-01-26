@@ -53,6 +53,12 @@
         <script src="data.js"></script>
         <script src="data2.js"></script>
         <script>  
+            var columns1 = $('#skulist').columns({
+                data: data1
+            });
+             var columns2 = $('#upclist').columns({
+                data: data2
+            });
             function my$(id) {
                   return document.getElementById(id);
                   }
@@ -61,16 +67,12 @@
             my$("skulist").style.display="none";
             my$("upclist").style.display="block";
              this.value="UPC";
-             var columns1 = $('#skulist').columns({
-                data: data1
-            });
+             
             }else if(this.value=="UPC"){
             my$("skulist").style.display="block";
             my$("upclist").style.display="none";
                  this.value="CASE";
-              var columns2 = $('#upclist').columns({
-                data: data2
-            });
+             
                 }
                };
             $('#theme').change(function() {
