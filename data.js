@@ -306,11 +306,6 @@ const data1 = [
  {'SKU':'1090422', 'Description':'MILL ST ORIGINAL ORGANIC 355ML 15UC CAN', 'Attr':'332*202*124 18x10=180 100050 (LAB)','Type':'D C'},
  {'SKU':'1093068', 'Description':'MILL ST 100TH MERIDIAN 50L 50FK KEG', 'Attr':'393*393*535 8x1=8 100050 (LAB)','Type':'D K'},
  {'SKU':'1093097', 'Description':'MILL ST 100TH MERIDIAN, 473ML 4TC CAN', 'Attr':'424*275*162 10x7=70 100050 (LAB)','Type':'D C'},
-#N/A
-#N/A
-#N/A
-#N/A
-#N/A
  {'SKU':'1111777', 'Description':'FOOTPRINT', 'Attr':'1220*1016*1117 1x1=1 NEX','Type':'D F'},
  {'SKU':'1125011', 'Description':'SOL IMPORT 330ML 4X6EB BTL', 'Attr':'375*261*243 12x5=60 100171 (SFB)','Type':'I B'},
  {'SKU':'1125012', 'Description':'SOL IMPORT 330ML 2X12EB BTL', 'Attr':'368*251*247 12x5=60 100171 (SFB)','Type':'I B'},
