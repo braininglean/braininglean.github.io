@@ -1,1 +1,85 @@
+<!DOCTYPE html>
+<!--[if IE 7]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang="en"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>BSearch</title>
+        
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        
+        <!-- Include *at least* the core style and default theme -->
+        <link rel="shortcut icon" href="images/bs.ico" />
+        <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+        <link href="css/prettify.css" rel="stylesheet">
+        <link href="css/hemisu-light.css" rel="stylesheet">
 
+        <link href="css/screen.css" rel="stylesheet" media="screen">
+
+        <link id="style" href="css/classic.css" rel="stylesheet" media="screen">
+        
+        <style>
+            pre { 
+                margin-top: 10px;
+            }
+        </style>
+
+         <!-- Include required JS files -->
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+    </head>
+    <body>
+        <header>
+            <h2>SKU Search</h2>
+        </header>
+        <section>            
+            <label>Change Theme:</label>
+            <select id="theme">
+                <option value="classic.css">Classic</option>
+                <option value="clean.css">Clean</option>
+            </select>
+            <input type="button" value="CASE" id="btn20" style="float:right;" />  
+           
+            <div id="skulist"></div>
+            <div id="upclist" style="display:none;" ></div>
+        </section>
+        
+
+        <script src="js/jquery.min.js"></script>
+        <script src="plugins/gotopage.js"></script>
+        <script src="plugins/ajaxpaging.js"></script>
+        <script src="js/jquery.columns.min.js"></script>
+        <script src="data.js"></script>
+        <script src="data2.js"></script>
+        <script>  
+            var columns1 = $('#skulist').columns({
+                data: data1
+            });
+             var columns2 = $('#upclist').columns({
+                data: data2
+            });
+            function my$(id) {
+                  return document.getElementById(id);
+                  }
+           my$("btn20").onclick=function(){
+           if(this.value=="CASE"){
+            my$("skulist").style.display="none";
+            my$("upclist").style.display="block";
+             this.value="UPC";
+             
+            }else if(this.value=="UPC"){
+            my$("skulist").style.display="block";
+            my$("upclist").style.display="none";
+                 this.value="CASE";
+             
+                }
+               };
+            $('#theme').change(function() {
+                $('#style').attr('href', '../css/'+$(this).val());
+            })
+        </script>   
+        
+    </body>
+</html>
