@@ -1,0 +1,1577 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /><title>
+	Braining Supervisor Hub
+</title><link rel="shortcut icon" href="static/images/Brainingicon2.ico" /><link href="static/css/datatables.min.css" rel="stylesheet" /><link rel="stylesheet" href="static/css/backend.css" /><link rel="stylesheet" href="static/css/remixicon.css" /><link rel="stylesheet" href="static/css/icons.css" />
+
+    <script src="static/js/backend-bundle.min.js"></script>
+
+    <script type="text/javascript">
+        let refffff = setTimeout(() => {
+            location.reload()
+        },60*0.5*1000)//5min * 60s * 1000ms
+        function openAddAlarmModal() {//你下面调用的是 show_modal()，不是这个
+            clearTimeout(refffff)
+            $('#modAddAlarm').modal('show');
+        }
+        function openAddAssistantModal() {
+            $('#modAddAssistant').modal('show');
+        }
+        function openChartModal(w=false) {
+            if (w)
+                $('#chartmodal2').modal('show');
+            else
+            $('#chartmodal').modal('show');
+        }
+
+        function imgErr(img) {
+            img.src = 'static/picture/t01.png';
+        }
+        
+    </script>
+    <style type="text/css">
+        .glyphicon.glyphicon-minus:before, .glyphicon.glyphicon-plus:before {
+            bottom: initial;
+            top: initial;
+        }
+
+        .box .number {
+            font-size: 12px;
+            background-color: red;
+            width: 16px;
+            line-height: 16px;
+            text-align: center;
+            color: #fff;
+            z-index: 2;
+            border-radius: 3px;
+            position: absolute;
+            transform: translate(3px,-1px)
+        }
+
+        .tmp1 img {
+            position: absolute;
+        }
+
+        #map-tip {
+            text-align: left;
+            font: 14px/16px Trebuchet MS, Helvetica, Arial, sans-serif;
+            display: none;
+            padding: 3px;
+            border: 1px solid #EBECED;
+            color: #edeef0;
+            z-index: 1000;
+            float: left;
+            position: absolute;
+            background: rgb(73, 73, 73);
+            background: -moz-linear-gradient(top, rgba(73, 73, 73, 1) 0%, rgba(101, 101, 101, 1) 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(73, 73, 73, 1)), color-stop(100%, rgba(101, 101, 101, 1)));
+            background: -webkit-linear-gradient(top, rgba(73, 73, 73, 1) 0%, rgba(101, 101, 101, 1) 100%);
+            background: -o-linear-gradient(top, rgba(73, 73, 73, 1) 0%, rgba(101, 101, 101, 1) 100%);
+            background: -ms-linear-gradient(top, rgba(73, 73, 73, 1) 0%, rgba(101, 101, 101, 1) 100%);
+            background: linear-gradient(to bottom, rgba(73, 73, 73, 1) 0%, rgba(101, 101, 101, 1) 100%);
+            word-break: keep-all;
+            white-space: nowrap;
+        }
+
+            #map-tip p {
+                margin: 0 !important;
+            }
+
+            #map-tip img {
+                float: left;
+                padding: 3px;
+            }
+    </style>
+</head>
+<body>
+    <form method="post" action="./5S.html" onsubmit="javascript:return WebForm_OnSubmit();" id="ctl01">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="n58JGASE2ZFTXcXMYK8BBCQndCtZP+Xq0KO5NIyUt4jvniDDEk6PnWgYldFqtPIbHdFMQrwbUhCbj/fnOBcrWJk42CKDI+wNQTNmojVnbmPvO0JlbwQdHcHF+r5XeLXCIw52IwgzdKyDR0W7wRCtUmOH9T0K7B7FjDNXzgSf1JqHGrsyqTLwZvoPPZh9dU3XSRmtCsqAuJpmpfJZzZyaU6Ph0BQYSQ7are2VSUWTx8Pkytw8gRD2jiy6qB6eqKCd20HuT3+b4zL9TvWay7OdU/DKofshcBIx+R+Xde2U2L/K1QzkeavlThmbdMeYGSbFzZ+n6ON4jQhiWmOqFM90eaLCK6JK64bxkKsShVpAJV5Bq2HcBbqGY9EqiwRvfA7wobcpfQC4dGKRtn450zkTpFUQjm0sJAdISFQ/QnaVxw2kDpI2q812jIRTFLx5EHnpzpeyvPmBJK6NoTX0qiPGTAcVv9TcGhv8i78Apswz8EDRQkV0gUS6sEgWek5nbC238HuKsnEV7Fb+iQjRszo0njAEEFECNwzFpOXKFJYriqWguqrZDrlTnH5qEFExvKpvOHeg1VJljt4hPl9JCJLKDdKy2f8P4s9m07p/6WXpYw3glsa7xZ5wCJe/3aWmrN/MnP6vttmqwq72HN8dLRsCgTKFtaslDEc1+kJWpoQzLmAH92nk4fPmV3z11YCz1BK7iIRg8BVXDYzs4RzKx+MiuuIC2yA78d86r8q3itj7BqzqPOEBSy27zF7aSqljCt4/QQ6n1q4wZ2KqzI5KStvNF1DB/VyP3dEShr1riirwyuKNN68tDV7UZqVNJZQNJXTnMtPlQIpkLuxyV29zmgpJYL/YyYIhWioWOYd488iOq8nfe23TzR4YLRIywcvq0sUDdckVJjbmaz69s68zdhDznBRuQ6TO5INWhIYJmiFEqsLE8Zip5dNg0kpzFm2DfUfky7KTCKdG5hDUH8R7ljLOtEdqfvEQhs91aUEQ2GsDPFYxfNKIcECQJ9SBKabmw0Pz5CGyXkVpvXT++20ndiGirxQu6KZNxIHCSUMBm/c7qVQ3EX59jlDeIk+XpnoZpzBA+wuuEBgmhTWLDxBaWUL+e7G0vFtYISlgMLWtM+edMhoUL2cX9GwqFe4DqGF0VDoN36k+VshfGFvREEjIBwkSQOq31R+hmAzW/wqEnEqgSSm21dVNzrboJ+6RK9W1rkpttT4PxC7jCpnYXt01IFKFMTLrHQ2EVxYEhkS1BJq4TnSzrpXf4vgGyTQGj+dWXPw4D0kgW5rD4r9coDgpR1Dt2LkpA0H9fpj2rPbXXn5Q2CtY/J7K6UKxeFKWy7SPfxGGsp+IFQXROyuXXXpBREUVV3XFyHHAbzzZzvWUhQpDbn/9hSxcEzoo9+DYetbJmUE+ZPhstUwSjvc0X2kgIC5ez2w85K5MTydrR+pwlBiYv72LJFEJjPPdWNW5JqBk7guyG8PH3OKwTi1v3++pMZ+7abGICA5R6504crycXpy9+p9ahz56/n2b9UMmbKjXcXDzN+8EkB9zA10Tj+UCD/u/ikjxdEysYoPJAOeCNWjm7t6lo2Hml8FAZjn1dWFy5nqMa8+RMRveQgogauQ3UvUh+AJVYYdA/DPyNWqjZEFjU91wdC9rpg7P7CO0eLHs2OUbQi9ndWlXuM3uQs1r/IvQyR+2zU9k8x3eDNeU4StthNnPE8iQuEAT5V+6rIUHgoAolhJ4iB0D1D6+fPFh9cIQjh9Gv6zlV6/IcOISg8RxrnSb0w/iYm86trINc4yZAh8tUDDTHHnF3UBhWxkmZYsIHr9OXZFcd06rzv7rRXzk1IHaueidXdyyL3WjDk0dwmwd9cXXkYDz+b3h2rIZ2utW88E+ELZvYpOlkIi/oAZ3/xXw57XoUA93WEmcMOMUbnBJjLLoi/5CK4wUz+tLH35Xoi1MSm003PocN4R1sxu7Z28WzSVZU+UnXGLFvmtWcNO5" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['ctl01'];
+if (!theForm) {
+    theForm = document.ctl01;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="static/js/webresource.js" type="text/javascript"></script>
+
+
+<script src="static/js/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="static/js/webresource.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="3CEAE82B" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="rTXZcPaeTpbSKtqrBh4J+RpWlSvPz0gBbeb+a9sTnxjWZqsjoof1/9/1XE4B27UojAw3hGzcwPFrtYIa4K2lbmr9kw2vaXjV4cllyv4cgAzfhM2Gy9v1IactS/ljoAuAL67VNI08RU1QDYdNvmc3Y+XYB3xd76vPYMs+ymsVHsy6+QuU81T9T7lLaEg7yp1VA+GLlzbBJ/8CMO+3adOoyWP6lHvhP1e9Sw20cX6CEUvIePjv0uBnYGyJ5yFVw6+3a0Wa4AWHdUiLZKfqkq91V0BumgG7Rhwn+2qBtqvMXndSysSox9PxAd6ikiEGz2Bg2vbEbZOSvucpYVLDHPexySqMJjeZHs1hTFGlDOv6uVHcuFbLPgiZIXIIB1cVDRWCA5mWQX27+n6g1fh8oTJuxB4Fwh0WnZl80aZpX8nKq4K5LS2iyvzC8EBJCwmDH8V+k94YZwixp3R+f+Egn2en5KZY1nj1xOiSmLHc6LoY3X3MaomC9GL8l4aVXRCYc7uS+U9/GftL27Hkrypo0UGWDdPz2k36SJgR+cY3DtNpcoV+TDRVWbhnn1uoPJCHzZFb/oJDIKRo7gBi6gyvWlk6dpaNbx7wrhwsXLnl1R4pqK/feVx+so2+BPsJYDZazFN4/6i7MSzjvXul8OHnyN5r9KTQUpCYUSVbLLp30pYPHAZiGRLHaYVmcGlpR0Rsw3qTaqEE0Qj0FLXfT/ndqDpP+1UxEUNH4qv9b408ESCE5j6O0EuOiASkFwlBSs0kc67qkfL/PvesGHXo06nf1lMBSffOXLG6y5EWu3jyEu32tGT0IsLgFo3Mf8Xz/9Lw+j2TN1NJABDXaXBumheZTwpwP970JBuwrIUb8SHsvDDce8qX/tNxahSgNsWN1XYTMhOMVzAKdxZQhNMbMNcV33/0RtYPneyuSzEI4TlDBdYLitbDRY+W8ZHia/4To+6AKq9dc3sa6yFXTIcnJt4zScD/PpmvB2AIHkN6GPhA0jLx3Q5UJ1NppUAdKUJ723bLRDcKY8nRhNsctSLe7HrJIz7LCSEl01CE3DFBqvEURyhsW8I6nUCzyuW/PYmWwDw2amDSP1eu66qulC6gGlwwcfKUPh2qXskcwCWFBZy/Ozt/MLmUiKqZsaH6JJRgoforuMkpQWeFPbrxAxa01VxaVxiR7uOurbPAUaS7vx5jgJqOvGUWl4CYpraPeNCylSk2LduXV3MBXlJR9NOKIk+RcCSssjFIY4+21Z/mRsLV4BHPnjFMJAO3xtTCT8um57uvFpv6sXr3W8WYRaQXYM0K9LI/GLj00wB8lgN4nRz/w2Mf/F/roTuoDLGc1c2X0gGUDh33i3dk51ImrJKa2h0E2JSPfKgUpvGL3rXQICfKU9H5F+0La8R/PorshGlTmQY0DypBj46fHGaPrFOTluKWNKCJcGbAUQ1gOn8VXvAveXfgjrn0RFw7043o0Z4vGSCdUSAmoI4bTdnXq+r+1gdv87fFAJkLz6CUO6KJxh8+yuDPe3uMyuDCKhtnhFfy+tXUmfVBLMPEuWDHC050DGcecpZmgEG/H9QuFetEJO3jHi1Ym93+BogrZgLCuc947gslLZWOJK3k/7v1vpYiOjvJHrv4LZQIyFKGoODaCzyUykhs3D2alURvbFU9vC5sdjowOxyaxqglnPva6FHkfp/QfBUcs9c1ClsY53k5H9jF38SDaQsGAM8xf5CHZK6FiYI34az8RFkR7uAGamqd+472vFF2Cp2TlNAQFoV30i6lhAXZUTHmZpp9E7VtK/NwGmWZKLTGQCGnWsRbXOyXKqsQuclzmm2dxRSzAUWIubACiJEWepcP8mwm0oYKvAz4E7ym/KsxNQSoICZCKL2IH8psrvdbkCh9VyIwd1WC0V7AmuM0pnm7FMHfSlcsQWEFqA3Mvcv+sbPKF3DvPBS+j8qwPFAfWha4d/Nsc7mdh+Rnfm4OerP5CJCnp2/rvGSAHsa/gmEoP1BsY3o5C/vbUWwMXTOKJfZ2UWF1PFVcafK+DxJEHnqcmpoEq3ZV93Xf+zmhyi1gpPUelB/H/h3AVgnrur7/FnUNw+tYdMt07Yc5t1guX91EwWM7qrTDkUM58oDLDATY+N+Yn/4uyRihdWJhvMqBeYhxY4oPBtNrefjNGV0D72qgFfbGFMJhe3sgVlrfDDRs" />
+</div>
+
+        <div class="wrapper">
+            <div class="mm-top-navbar">
+                <div class="mm-navbar-custom">
+                    <div class="container">
+                        <nav class="navbar navbar-expand-lg navbar-light p-0">
+                            <div class="mm-navbar-logo d-flex align-items-center justify-content-between">
+                                <i class="ri-menu-line wrapper-menu"></i>
+                                <a href="admin/AdminHome.aspx" class="header-logo">
+                                    <img src="static/picture/Braining-icon.png" class="img-fluid rounded-normal" alt="logo" width="80" height="80" />
+                                    <h5 class="logo-title ml-2">Braining Supervisor Hub</h5>
+                                </a>
+                            </div>
+                            <div class="mm-menu-horizontal">
+                                <nav class="mm-sidebar-menu">
+                                    <div class=" mm-sidebar-logo d-flex align-items-center justify-content-between">
+                                        <a href="admin/AdminHome.aspx" class="header-logo">
+                                            <img src="static/picture/Braining-icon.png" class="img-fluid rounded-normal"
+                                                alt="logo" />
+                                            <h5 class="logo-title ml-2">Braining Supervisor Hub</h5>
+                                        </a>
+                                        <div class="mm-menu-bt-sidebar">
+                                            <i class="las la-bars wrapper-menu"></i>
+                                        </div>
+                                    </div>
+                                    <ul id="mm-sidebar-toggle" class="mm-menu d-flex">
+                                        <li class="active">
+                                            <a href="#" class=""><span>Operations</span></a>
+
+                                        </li>
+                                        <li class="">
+                                            <a href="admin/AdminHome.aspx" class="" title="Back to homepage"><span>Main</span></a>
+                                        </li>
+                                        <li class="">
+                                            <a href="#pages" class="collapsed" data-toggle="collapse" aria-expanded="false"><span>Work Instructions</span><i class="ri-arrow-right-s-line mm-arrow-right"></i></a>
+                                            <ul id="pages" class="mm-submenu sub-scrll collapse" data-parent="#mm-sidebar-toggle">
+                                                <li class="">
+                                                    <a href="/RMTmanual/RMT Manuals/1050P031.4 Gantry Operating Manual.pdf" target="_blank"><span>Gantry Operating Manual</span></a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="/RMTmanual/RMT Manuals/1050P032.1 Conveyor System Operations Manual.pdf" target="_blank"><span>Conveyor System Operations Manual</span></a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="/RMTmanual/RMT Manuals/1050P042.2 Layer Pick Gantry Mechanical Maintenance Manual.pdf" target="_blank"><span>LPG Mechanical Maintenance</span></a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="/RMTmanual/RMT Manuals/1050P040.3 Row Pick Gantry Mechanical Maintenance Manual.pdf" target="_blank"><span>RPG Mechanical Maintenance</span></a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="/RMTmanual/RMT Manuals/1050P041.2 Loader Gantry Mechanical Maintenance Manual.pdf" target="_blank"><span>Loader Gantry Mechanical Maintenance</span></a>
+                                                </li>
+                                                <li class="">
+                                                    <a href="/RMTmanual/RMT Manuals/11050P044.2 Gantry Electrical Description.pdf" target="_blank"><span>Gantry Electrical</span></a>
+                                                </li>
+                                                <li class="">
+
+                                                    <a href="/5STPM/Stage Operation Supervisor SOP.pdf" target="_blank"><span>Stage Operation Supervisor SOP</span></a>
+
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button
+                                    class="navbar-toggler"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#navbarSupportedContent"
+                                    aria-controls="navbarSupportedContent"
+                                    aria-label="Toggle navigation">
+                                    <i class="ri-menu-3-line"></i>
+                                </button>
+                                <div
+                                    class="collapse navbar-collapse"
+                                    id="navbarSupportedContent">
+                                    <ul class="navbar-nav ml-auto navbar-list align-items-center">
+                                        <li class="nav-item nav-icon search-content">
+                                            <a
+                                                href="#"
+                                                class="search-toggle rounded"
+                                                id="dropdownSearch"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"><i class="ri-search-line"></i></a>
+                                            <div
+                                                class="mm-search-bar mm-sub-dropdown dropdown-menu"
+                                                aria-labelledby="dropdownSearch">
+
+                                                <div class="form-group mb-0 position-relative">
+                                                    <input
+                                                        type="text"
+                                                        class="text search-input font-size-12"
+                                                        placeholder="type here to search..." /><a href="#" class="search-link"><i class="las la-search"></i></a>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                        <li class="nav-item nav-icon dropdown">
+                                            <a
+                                                href="#"
+                                                class="search-toggle dropdown-toggle"
+                                                id="dropdownMenuButton"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="20"
+                                                    height="20"
+                                                    viewbox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    stroke-width="2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    class="feather feather-bell">
+                                                    <path
+                                                        d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9">
+                                                    </path>
+                                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                                </svg>
+                                                <span class="bg-dark dots"></span></a>
+                                            <div class="mm-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <div class="card shadow-none m-0">
+                                                    <div class="card-body p-0">
+                                                        <div class="cust-title p-3">
+                                                            <div
+                                                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-between
+                                ">
+                                                                <h5 class="mb-0">Notifications</h5>
+                                                                <a
+                                                                    class="badge badge-primary badge-card"
+                                                                    href="#">1</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="px-3 pt-0 pb-0 sub-card">
+                                                            <a href="#" class="mm-sub-card">
+                                                                <div
+                                                                    class="
+                                    media
+                                    align-items-center
+                                    cust-card
+                                    py-3
+                                    border-bottom
+                                  ">
+
+                                                                    <div class="media-body ml-3">
+                                                                        <div
+                                                                            class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-between
+                                      ">
+                                                                            <h6 class="mb-0">1. First Version Release</h6>
+                                                                            <small class="text-dark"><b>2023/05/11</b></small>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="nav-item nav-icon dropdown caption-content">
+                                            <a
+                                                href="#"
+                                                class="search-toggle dropdown-toggle"
+                                                id="dropdownMenuButton4"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false">
+                                                <img src="static/picture/fa328c4566514746957d4e85756e5be4.gif" id="logoImg1" class="img-fluid rounded" alt="user" onerror="imgErr(this)" />
+                                            </a>
+                                            <div
+                                                class="mm-sub-dropdown dropdown-menu"
+                                                aria-labelledby="dropdownMenuButton">
+                                                <div class="card shadow-none m-0">
+                                                    <div class="card-body p-0 text-center">
+                                                        <div class="media-body profile-detail text-center">
+                                                            <img
+                                                                src="static/picture/profile1.jpg"
+                                                                alt="profile-bg"
+                                                                class="rounded-top img-fluid mb-4" /><img src="static/picture/fa328c4566514746957d4e85756e5be4.gif" id="logoImg2" alt="profile-img" class="rounded profile-img img-fluid avatar-70" onerror="imgErr(this)" />
+                                                        </div>
+                                                        <div class="p-3">
+                                                            <h5 class="mb-1">
+                                                                <a
+                                                                    href="javascript:;"
+                                                                    class="">
+                                                                    <span id="Label1" style="color:#FFBA39;"></span></a>
+                                                            </h5>
+                                                            <p class="mb-0">Since&nbsp;2024-11-01</p>
+                                                            <div
+                                                                class="
+                                  d-flex
+                                  align-items-center
+                                  justify-content-center
+                                  mt-3
+                                ">
+                                                                <a href="profile.aspx" class="btn border mr-2">Profile</a><a href="default.aspx" class="btn border">Sign Out</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <!--*****************************************************************************************************-->
+            <div class="content-page">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <div class="header-title" style="margin-top: 10px;">
+                                        <h4 class="card-title">5S Dashboard <span class="d-xs-none">- Sort | Set | Shine | Standardize | Sustain</span></h4>
+
+                                    </div>
+                                    <div class="form-container form-inline">
+
+                                        <div class="form-group" style="margin: 0 5px;">
+                                            <input id="chkReport" type="checkbox" name="chkReport" onclick="javascript:setTimeout(&#39;__doPostBack(\&#39;chkReport\&#39;,\&#39;\&#39;)&#39;, 0)" /><label for="chkReport"> Report</label>
+
+                                        </div>
+
+                                        <div class="form-group" style="margin: 0 5px;">
+                                            <select name="yearddl" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;yearddl\&#39;,\&#39;\&#39;)&#39;, 0)" id="yearddl" class="form-control" required="">
+	<option selected="selected" value="2024">2024</option>
+
+</select>
+                                        </div>
+                                        <div class="form-group" style="margin: 0 5px;">
+                                            <select name="qmwoption" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;qmwoption\&#39;,\&#39;\&#39;)&#39;, 0)" id="qmwoption" class="form-control" required="">
+	<option selected="selected" value="Weekly">Weekly</option>
+	<option value="Monthly">Monthly</option>
+
+</select>
+                                        </div>
+
+                                        <div class="form-group" style="margin: 0 5px;">
+                                            <select name="qmwddl" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;qmwddl\&#39;,\&#39;\&#39;)&#39;, 0)" id="qmwddl" class="form-control" required="">
+	<option value="WK 1">WK 1</option>
+	<option value="WK 2">WK 2</option>
+	<option value="WK 3">WK 3</option>
+	<option value="WK 4">WK 4</option>
+	<option value="WK 5">WK 5</option>
+	<option value="WK 6">WK 6</option>
+	<option value="WK 7">WK 7</option>
+	<option value="WK 8">WK 8</option>
+	<option value="WK 9">WK 9</option>
+	<option value="WK 10">WK 10</option>
+	<option value="WK 11">WK 11</option>
+	<option value="WK 12">WK 12</option>
+	<option value="WK 13">WK 13</option>
+	<option value="WK 14">WK 14</option>
+	<option value="WK 15">WK 15</option>
+	<option value="WK 16">WK 16</option>
+	<option value="WK 17">WK 17</option>
+	<option value="WK 18">WK 18</option>
+	<option value="WK 19">WK 19</option>
+	<option value="WK 20">WK 20</option>
+	<option value="WK 21">WK 21</option>
+	<option value="WK 22">WK 22</option>
+	<option value="WK 23">WK 23</option>
+	<option value="WK 24">WK 24</option>
+	<option value="WK 25">WK 25</option>
+	<option value="WK 26">WK 26</option>
+	<option value="WK 27">WK 27</option>
+	<option value="WK 28">WK 28</option>
+	<option value="WK 29">WK 29</option>
+	<option value="WK 30">WK 30</option>
+	<option value="WK 31">WK 31</option>
+	<option value="WK 32">WK 32</option>
+	<option value="WK 33">WK 33</option>
+	<option value="WK 34">WK 34</option>
+	<option value="WK 35">WK 35</option>
+	<option value="WK 36">WK 36</option>
+	<option value="WK 37">WK 37</option>
+	<option value="WK 38">WK 38</option>
+	<option value="WK 39">WK 39</option>
+	<option value="WK 40">WK 40</option>
+	<option value="WK 41">WK 41</option>
+	<option value="WK 42">WK 42</option>
+	<option value="WK 43">WK 43</option>
+	<option selected="selected" value="WK 44">WK 44</option>
+	<option value="WK 45">WK 45</option>
+	<option value="WK 46">WK 46</option>
+	<option value="WK 47">WK 47</option>
+	<option value="WK 48">WK 48</option>
+	<option value="WK 49">WK 49</option>
+	<option value="WK 50">WK 50</option>
+	<option value="WK 51">WK 51</option>
+	<option value="WK 52">WK 52</option>
+	<option value="WK 53">WK 53</option>
+
+</select>
+                                        </div>
+                                        <div class="form-group" style="margin: 0 0 0 5px;">
+                                            <input name="txtDateMain" type="date" value="2024-11-02" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;txtDateMain\&#39;,\&#39;\&#39;)&#39;, 0)" onkeypress="if (WebForm_TextBoxKeyHandler(event) == false) return false;" id="txtDateMain" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row " style="margin: 10px 0 0 25px; padding: 0 5px">
+                                    <div id="map_base" class="w-100" onmouseover="clear_all()">
+                                        <svg
+                                            version="1.1"
+                                            viewBox="0 0 1254.0001 756"
+                                            xml:space="preserve"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:svg="http://www.w3.org/2000/svg">
+                                            <g id="g1" transform="translate(125.16631,1.3768018)">
+                                                <image
+                                                    width="100%"
+                                                    height="100%"
+                                                    preserveAspectRatio="none"
+                                                    xlink:href="static/images/Braining-layout - colorless.PNG"
+                                                    id="image1-5"
+                                                    x="-125.16631"
+                                                    y="-1.3768018"
+                                                    style="display: inline" />
+                                               
+                                               
+                                                
+                                                <path
+                                                    id="ACLP_2"
+                                                    style="fill: #0000ff; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="m 371.90625,448.00195 v 1.49024 h -97.66602 v 27.90039 h -8.06835 v 0.043 H 216.38477 215.39258 61.541016 V 502.25 H 216.38477 v -5.95508 h 1.45312 v 150.82227 h 49.51367 V 496.29492 h 3.21289 V 646.35547 H 356.7168 V 507.25586 h 18.22265 v -0.30664 h 6.61133 v -58.94727 z m -99.9375,40.26563 h 52.99609 v 0.77344 H 271.96875 Z M 67.865234,503.31445 v 129.4375 h 73.587886 v -129.4375 z m 76.095706,0.11133 v 129.06641 h 72.27929 V 503.42578 Z M -8.3574219,508.56836 V 632.75391 H 65.892578 V 508.56836 Z" onclick="show_modal(this);" />
+                                                <path
+                                                    id="LM_Area"
+                                                    style="fill: #00ff00; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="m -72.771484,391.59375 v 58.66797 h 1.429687 v 208.51367 h 59.324219 V 436.125 H -47.755859 V 391.59375 Z M 513.38672,609.84766 v 36.42382 h 92.26367 v -36.42382 z m -589.017579,49.63476 v 61.4961 h 15.724609 v -61.4961 z" onclick="show_modal(this);" />
+
+                                                <path
+                                                    id="Bond_Warehouse"
+                                                    style="fill: #800000; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="m -74.021484,43.447266 v 38.61914 h 3.21875 V 394.24414 H 123.9043 V 82.066406 h -3.2168 V 49.884766 H -28.964844 v 32.18164 h -3.21875 v -38.61914 z" onclick="show_modal(this);" />
+                                                <path
+                                                    id="Receiving_Dock"
+                                                    style="fill: #00ffff; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="M 956.64258,9.9960938 V 35.986328 h 89.96682 V 9.9960938 Z M -75.630859,11.263672 v 28.964844 h 46.613281 v 8.050781 H 475.75391 V 40.228516 H 599.88672 V 51.869141 H 1043.5 V 39.095703 H 954.23047 V 11.263672 Z" onclick="show_modal(this);" />
+                                                <path
+                                                    id="ACLP_1"
+                                                    style="fill: #0000ff; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="m 505.89844,437.32422 v 36.43945 17.02149 h -0.13086 v 25.84179 h 25.54297 v 18.35352 h 0.52734 v 69.53711 h 74.57813 v -69.53711 h 1.21093 v -44.19531 h -47.6875 v -17.02149 h 76.73828 v -36.43945 z m 309.32617,37.61133 v 0.17773 H 560.98438 v 13.37891 h 47.27734 v 5.63476 h 214.00586 v -0.35156 h 1.60547 v -18.83984 z m -205.60547,20.63281 v 147.9043 h 57.2832 v -147.9043 z m 136.63672,0.17187 v 130.74415 h 77.73437 V 495.74023 Z m -77.28516,0.34766 v 130.76367 h 75.25 V 496.08789 Z m 157.60547,8.03906 v 122.48633 h 72.40821 V 504.12695 Z" onclick="show_modal(this);" />
+
+
+                                                <path id="Bulk_Inventory" style="fill:#ffff00;fill-opacity:0.323864;stroke:#000000;stroke-width:0.633333;stroke-dasharray:none;stroke-opacity:1" d="M 600.19307,54.660308 V 436.21109 h 39.65625 V 476.9396 H 826.3376 V 443.715 h 51.44531 V 248.6525 H 778.10713 V 54.660308 Z m 303.1914,391.800782 v 111.61523 h 78.48047 V 446.46109 Z M 123.5251,51.109526 V 293.2521 h 0.9375 v 100.73047 h 0.99804 v 2.75196 H -45.660451 v 39.78515 h 34.597657 v 0.8125 h -0.277344 v 69.01367 H 60.564159 V 481.17593 H 273.01338 V 448.465 h 78.09765 v -1.19727 h 0.0508 v -53.28516 h 40.21875 V 374.1271 h 53.43946 v -80.875 h 31.20703 V 51.109526 Z" onclick="show_modal(this);"/>
+
+
+
+
+
+                                                <path
+                                                    id="Charging_Area"
+                                                    style="fill: #550000; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="m 983.76713,413.28863 v 150.87695 h -83.68945 v 86.38086 h -3.43555 v 65.29492 h 60.0625 v -47.9082 h 86.37887 v -94.15234 h 0.024 V 413.28863 Z" onclick="show_modal(this);" />
+                                               
+                                               <path  id="PCC_Platform" style="fill:#ff0000;fill-opacity:0.323864;stroke:#000000;stroke-width:0.723951;stroke-dasharray:none;stroke-opacity:1" d="m 357.7793,508.60742 v 7.70508 h -0.36328 v 130.86133 h 34.05078 v -0.36524 h 48.39258 19.64257 12.62696 41.39062 v -38.23242 h 17.1875 v -73.66015 h -0.74805 v -16.08985 h -96.01757 v 35.38086 h -0.39649 v 27.35938 H 391.4668 V 516.3125 h -6.67774 v -7.70508 z m 602.58612,164.07147 h 81.79328 v 42.30685 h -81.79328 z" onclick="show_modal(this);"/>
+
+
+
+
+                                                <path
+                                                    id="Can_Crusher"
+                                                    style="fill: #ff0000; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="M 781.35823,54.492253 V 244.46421 h 99.47008 v 196.56037 h 99.54236 v -29.75575 h 62.59143 V 196.97122 54.492253 Z" onclick="show_modal(this);" />
+                                               
+                                               
+                                                <path id="Returns" style="fill:#ff00ff;fill-opacity:0.323864;stroke:#000000;stroke-width:0.633333" d="m 445.68525,293.87515 v 80.94727 h -52.875 v 20.58984 h -40.24023 v 49.59766 h 152.07226 v -9.35742 h 94.04883 v -34.62696 -26.20312 -80.94727 z" onclick="show_modal(this);"/>
+
+
+
+                                                <path id="Breakage" style="fill:#008080;fill-opacity:0.323864;stroke:#000000;stroke-width:0.633333" d="m 827.28486,446.52945 v 55.24023 h 73.96094 v -55.24023 z" onclick="show_modal(this);"/>
+                                                
+                                                
+                                                <path
+                                                    id="Keg_Area" 
+                                                   style="fill:#784421;fill-opacity:0.323864;stroke:#000000;stroke-width:0.624777" d="m 386.39424,447.00015 v 0.004 h -3.27149 v 59.43945 h 3.27149 v 9.83399 h 6.08984 v 64.11718 h 39.7832 V 516.2775 h 72.08203 V 447.00015 Z M 480.88837,44.367649 H 596.40246 V 292.03203 H 480.88837 Z"           
+                                                     onclick="show_modal(this);" />
+                                                <path
+                                                    id="Loading_Dock"
+                                                    style="fill: #00ffff; fill-opacity: 0.323864; stroke: #000000; stroke-dasharray: none; stroke-opacity: 1"
+                                                    d="m 884.07031,628.74609 v 0.48829 H 670.27344 v 20.74414 H 213.79297 v 11.52539 h -1.15625 V 637.30273 H -10.404297 v 24.20118 h -48.539062 v 56.46875 H 892.1582 v -0.16016 h 1.14844 v -66.63477 h 2.63867 v -22.43164 z" onclick="show_modal(this);" />
+                                            </g>
+                                            <g id="map_points"></g>
+                                        </svg>
+
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <span id="map-tip"></span><span id="scroll-top"><a class="scrollup"></a></span>
+
+                    <script>
+                        $(function () {
+                            $("#btnSend").click(function () { $.ajax({ type: "POST", data: $("#frmContact").serialize(), success: function (a) { $("#spanMessage").html("Please Wait..."); if (parseInt(a) > 0) { $("#spanMessage").html('<div class="alert-success"><strong>Done! </strong> Your message has been sent.</div>') } else { alert(a); $("#spanMessage").html('<div class="alert-error"><strong>Error! </strong> Somthing is Wrong!</div>') } } }) });
+                            $("#btnSubmit").click(function () { $.ajax({ type: "POST", data: $("#frmnotify").serialize(), success: function (a) { $("#submitMessage").html("Please Wait..."); if (parseInt(a) > 0) { $("#submitMessage").html('<div class="alert-success"><strong>Done! </strong> Successfully submitted</div>') } else { alert(a); $("#submitMessage").html('<div class="alert-error"><strong>Error! </strong> Somthing is Wrong!</div>') } } }) });
+                            $("#wdSubmit").click(function () { $.ajax({ type: "POST", data: $("#worldtry").serialize(), success: function (a) { $("#worldtry #submitMessage").html("Please Wait..."); if (parseInt(a) > 0) { $("#worldtry #submitMessage").html('<div class="alert-success"><strong>Done! </strong> Successfully submitted</div>') } else { alert(a); $("#worldtry #submitMessage").html('<div class="alert-error"><strong>Error! </strong> Somthing is Wrong!</div>') } } }) })
+                        });
+
+                        jQuery(document).ready(function () { jQuery(window).scroll(function () { if (jQuery(this).scrollTop() > 100) { jQuery(".scrollup").fadeIn() } else { jQuery(".scrollup").fadeOut() } }); jQuery(".scrollup").click(function () { jQuery("html, body").animate({ scrollTop: 0 }, 700); return false }) });
+                        $("#my-button").click(function () { $("#my-modal").modal() });
+
+                        // Quick feature detection
+                        function isTouchEnabled() {
+                            return (('ontouchstart' in window)
+                                || (navigator.MaxTouchPoints > 0)
+                                || (navigator.msMaxTouchPoints > 0));
+                        }
+
+                        $(function () {
+                            if ($('#lakes').find('path').eq(0).attr('fill') != 'undefined') {
+                                $('#lakes').find('path').attr({ 'fill': map_config['default']['lakesColor'] }).css({ 'stroke': map_config['default']['borderColor'] });
+                            }
+
+                            $('#map-tip').css({
+                                'box-shadow': '1px 2px 4px ' + map_config['default']['hoverShadow'],
+                                '-moz-box-shadow': '2px 3px 6px ' + map_config['default']['hoverShadow'],
+                                '-webkit-box-shadow': '2px 3px 6px ' + map_config['default']['hoverShadow'],
+                            });
+
+                            if ($('#shadow').find('path').eq(0).attr('fill') != 'undefined') {
+                                var shadowOpacity = map_config['default']['shadowOpacity'];
+                                var shadowOpacity = parseInt(shadowOpacity);
+                                if (shadowOpacity >= 100) { shadowOpacity = 1; } else if (shadowOpacity <= 0) { shadowOpacity = 0; } else { shadowOpacity = shadowOpacity / 100; }
+
+                                $('#shadow').find('path').attr({ 'fill': map_config['default']['mapShadow'] }).css({ 'fill-opacity': shadowOpacity })
+                            }
+                        });
+                        let paths = []
+                        function addEvent(id, relationId) {
+                            var _obj = $('#' + id);
+                            paths.push(_obj)
+                            var _Textobj = $('#' + id + ',' + '#' + map_config[id]['namesId']);
+                            //var _h = $('#map').height();
+                            $('#' + ['text-abb']).attr({ 'fill': map_config['default']['namesColor'] });
+
+                            _obj.attr({ 'fill': map_config[id]['upColor'], 'stroke': map_config['default']['borderColor'] });
+                            _Textobj.attr({ 'cursor': 'default' });
+                            if (map_config[id]['enable'] == true) {
+                                if (isTouchEnabled()) {
+                                    //clicking effect
+                                    _Textobj.on('touchstart', function (e) {
+                                        var touch = e.originalEvent.touches[0];
+                                        var x = touch.pageX + 10, y = touch.pageY + 15;
+                                        var tipw = $('#map-tip').outerWidth(), tiph = $('#map-tip').outerHeight(),
+                                            x = (x + tipw > $(document).scrollLeft() + $(window).width()) ? x - tipw - (20 * 2) : x
+                                        y = (y + tiph > $(document).scrollTop() + $(window).height()) ? $(document).scrollTop() + $(window).height() - tiph - 10 : y
+                                        $('#' + id).css({ 'fill': map_config[id]['downColor'] });
+                                        $('#map-tip').show().html(map_config[id]['hover']);
+                                        $('#map-tip').css({ left: x, top: y })
+                                    })
+                                    _Textobj.on('touchend', function () {
+                                        $('#' + id).css({ 'fill': map_config[id]['upColor'] });
+                                        if (map_config[id]['target'] == 'new_window') {
+                                            window.open(map_config[id]['url']);
+                                        } else if (map_config[id]['target'] == 'same_window') {
+                                            window.location.href = map_config[id]['url'];
+                                        }
+                                    })
+                                }
+                                _Textobj.attr({ 'cursor': 'pointer' });
+                                _Textobj.hover(function () {
+                                    //moving in/out effect
+                                    $('#map-tip').show().html(map_config[id]['hover']);
+                                    _obj.css({ 'fill': map_config[id]['overColor'] })
+                                }, function () {
+                                    $('#map-tip').hide();
+                                    $('#' + id).css({ 'fill': map_config[id]['upColor'] });
+                                })
+                                //clicking effect
+                                _Textobj.mousedown(function () {
+                                    $('#' + id).css({ 'fill': map_config[id]['downColor'] });
+                                })
+                                _Textobj.mouseup(function () {
+                                    $('#' + id).css({ 'fill': map_config[id]['overColor'] });
+                                    if (map_config[id]['target'] == 'new_window') {
+                                        window.open(map_config[id]['url']);
+                                    } else if (map_config[id]['target'] == 'same_window') {
+                                        window.location.href = map_config[id]['url'];
+                                    }
+                                })
+                                _Textobj.mousemove(function (e) {
+                                    var x = e.pageX + 10, y = e.pageY + 15;
+                                    var tipw = $('#map-tip').outerWidth(), tiph = $('#map-tip').outerHeight(),
+                                        x = (x + tipw > $(document).scrollLeft() + $(window).width()) ? x - tipw - (20 * 2) : x
+                                    y = (y + tiph > $(document).scrollTop() + $(window).height()) ? $(document).scrollTop() + $(window).height() - tiph - 10 : y
+                                    $('#map-tip').css({ left: x, top: y })
+                                })
+                            }
+                        }
+
+                        //The pins code
+                        $(function () {
+                            if ($('#pin-shadow').find('path').eq(0).attr('fill') != 'undefined') {
+                                var pinShadowOpacity = pin_config['default']['pinShadowOpacity'];
+                                var pinShadowOpacity = parseInt(pinShadowOpacity);
+                                if (pinShadowOpacity >= 100) { pinShadowOpacity = 1; } else if (pinShadowOpacity <= 0) { pinShadowOpacity = 0; } else { pinShadowOpacity = pinShadowOpacity / 100; }
+
+                                $('#pin-shadow').find('path').attr({ 'fill': pin_config['default']['pinShadow'] }).css({ 'fill-opacity': pinShadowOpacity })
+                            };
+
+
+                            var points_len = pin_config['points'].length;
+                            if (points_len > 0) {
+                                var xmlns = "http://www.w3.org/2000/svg";
+                                var tsvg_obj = document.getElementById("map_points");
+                                var svg_circle, svg_rect;
+                                for (var i = 0; i < points_len; i++) {
+                                    if (pin_config['points'][i]['shape'] == "circle") {
+                                        svg_circle = document.createElementNS(xmlns, "circle");
+                                        svg_circle.setAttributeNS(null, "cx", pin_config['points'][i]['pos_X'] + 1);
+                                        svg_circle.setAttributeNS(null, "cy", pin_config['points'][i]['pos_Y'] + 1);
+                                        svg_circle.setAttributeNS(null, "r", pin_config['points'][i]['diameter'] / 2);
+                                        svg_circle.setAttributeNS(null, "fill", pin_config['default']['pinShadow']);
+                                        svg_circle.setAttributeNS(null, "style", 'fill-opacity:' + pinShadowOpacity);
+                                        svg_circle.setAttributeNS(null, "id", 'map_points_shadow_' + i);
+                                        tsvg_obj.appendChild(svg_circle);
+                                        svg_circle = document.createElementNS(xmlns, "circle");
+                                        svg_circle.setAttributeNS(null, "cx", pin_config['points'][i]['pos_X']);
+                                        svg_circle.setAttributeNS(null, "cy", pin_config['points'][i]['pos_Y']);
+                                        svg_circle.setAttributeNS(null, "r", pin_config['points'][i]['diameter'] / 2);
+                                        svg_circle.setAttributeNS(null, "fill", pin_config['points'][i]['upColor']);
+                                        svg_circle.setAttributeNS(null, "stroke", pin_config['points'][i]['outline']);
+                                        svg_circle.setAttributeNS(null, "stroke-width", pin_config['points'][i]['thickness']);
+                                        svg_circle.setAttributeNS(null, "id", 'map_points_' + i);
+                                        tsvg_obj.appendChild(svg_circle);
+                                        dynamicAddEvent(i);
+                                    }
+                                    else if (pin_config['points'][i]['shape'] == "rectangle") {
+                                        svg_rect = document.createElementNS(xmlns, "rect");
+                                        svg_rect.setAttributeNS(null, "x", pin_config['points'][i]['pos_X'] - pin_config['points'][i]['width'] / 2 + 1);
+                                        svg_rect.setAttributeNS(null, "y", pin_config['points'][i]['pos_Y'] - pin_config['points'][i]['height'] / 2 + 1);
+                                        svg_rect.setAttributeNS(null, "width", pin_config['points'][i]['width']);
+                                        svg_rect.setAttributeNS(null, "height", pin_config['points'][i]['height']);
+                                        svg_rect.setAttributeNS(null, "fill", pin_config['default']['pinShadow']);
+                                        svg_rect.setAttributeNS(null, "style", 'fill-opacity:' + pinShadowOpacity);
+                                        svg_rect.setAttributeNS(null, "id", 'map_points_shadow_' + i);
+                                        tsvg_obj.appendChild(svg_rect);
+                                        svg_rect = document.createElementNS(xmlns, "rect");
+                                        svg_rect.setAttributeNS(null, "x", pin_config['points'][i]['pos_X'] - pin_config['points'][i]['width'] / 2);
+                                        svg_rect.setAttributeNS(null, "y", pin_config['points'][i]['pos_Y'] - pin_config['points'][i]['height'] / 2);
+                                        svg_rect.setAttributeNS(null, "width", pin_config['points'][i]['width']);
+                                        svg_rect.setAttributeNS(null, "height", pin_config['points'][i]['height']);
+                                        svg_rect.setAttributeNS(null, "fill", pin_config['points'][i]['upColor']);
+                                        svg_rect.setAttributeNS(null, "stroke", pin_config['points'][i]['outline']);
+                                        svg_rect.setAttributeNS(null, "stroke-width", pin_config['points'][i]['thickness']);
+                                        svg_rect.setAttributeNS(null, "id", 'map_points_' + i);
+                                        tsvg_obj.appendChild(svg_rect);
+                                        dynamicAddEvent(i);
+                                    } else if (pin_config['points'][i]['shape'] == "image") {
+                                        svg_rect = document.createElementNS(xmlns, "rect");
+                                        svg_rect.setAttributeNS(null, "x", pin_config['points'][i]['pos_X'] - pin_config['points'][i]['width'] / 2 + 1);
+                                        svg_rect.setAttributeNS(null, "y", pin_config['points'][i]['pos_Y'] - pin_config['points'][i]['height'] / 2 + 1);
+                                        svg_rect.setAttributeNS(null, "width", pin_config['points'][i]['width']);
+                                        svg_rect.setAttributeNS(null, "height", pin_config['points'][i]['height']);
+                                        svg_rect.setAttributeNS(null, "fill", pin_config['default']['pinShadow']);
+                                        svg_rect.setAttributeNS(null, "style", 'fill-opacity:' + pinShadowOpacity);
+                                        svg_rect.setAttributeNS(null, "id", 'map_points_shadow_' + i);
+                                        tsvg_obj.appendChild(svg_rect);
+                                        svg_rect = document.createElementNS(xmlns, "image");
+                                        svg_rect.setAttributeNS(null, "x", pin_config['points'][i]['pos_X'] - pin_config['points'][i]['width'] / 2);
+                                        svg_rect.setAttributeNS(null, "y", pin_config['points'][i]['pos_Y'] - pin_config['points'][i]['height'] / 2);
+                                        svg_rect.setAttributeNS(null, "width", pin_config['points'][i]['width']);
+                                        svg_rect.setAttributeNS(null, "height", pin_config['points'][i]['height']);
+                                        svg_rect.setAttributeNS(null, "href", pin_config['points'][i]['href']);
+                                        svg_rect.setAttributeNS(null, "preserveAspectRatio", 'none');
+                                        svg_rect.setAttributeNS(null, "style", "display:inline");
+                                        svg_rect.setAttributeNS(null, "id", 'map_points_' + i);
+                                        tsvg_obj.appendChild(svg_rect);
+                                        dynamicAddEvent(i);
+                                    }
+                                }
+                            }
+                        });
+
+                        function dynamicAddEvent(id) {
+                            var obj = $('#map_points_' + id);
+
+                            if (pin_config['points'][id]['enable'] == true) {
+                                if (isTouchEnabled()) {
+                                    obj.on('touchstart', function (e) {
+                                        var touch = e.originalEvent.touches[0];
+                                        var x = touch.pageX + 10, y = touch.pageY + 15;
+                                        var tipw = $('#map-tip').outerWidth(), tiph = $('#map-tip').outerHeight(),
+                                            x = (x + tipw > $(document).scrollLeft() + $(window).width()) ? x - tipw - (20 * 2) : x
+                                        y = (y + tiph > $(document).scrollTop() + $(window).height()) ? $(document).scrollTop() + $(window).height() - tiph - 10 : y
+                                        $('#' + id).css({ 'fill': pin_config['points'][id]['downColor'] });
+                                        $('#map-tip').show().html(pin_config['points'][id]['hover']);
+                                        $('#map-tip').css({ left: x, top: y })
+                                    })
+                                    obj.on('touchend', function () {
+                                        $('#' + id).css({ 'fill': pin_config['points'][id]['upColor'] });
+                                        if (pin_config['points'][id]['target'] == 'new_window') {
+                                            window.open(pin_config['points'][id]['url']);
+                                        } else if (pin_config['points'][id]['target'] == 'same_window') {
+                                            window.location.href = pin_config['points'][id]['url'];
+                                        }
+                                    })
+                                }
+                                obj.attr({ 'cursor': 'pointer' });
+                                obj.hover(function () {
+                                    $('#map-tip').show().html(pin_config['points'][id]['hover']);
+                                    obj.css({ 'fill': pin_config['points'][id]['overColor'] })
+                                }, function () {
+                                    $('#map-tip').hide();
+                                    obj.css({ 'fill': pin_config['points'][id]['upColor'] });
+                                })
+                                //clicking effect
+                                obj.mousedown(function () {
+                                    obj.css({ 'fill': pin_config['points'][id]['downColor'] });
+                                })
+                                obj.mouseup(function () {
+                                    obj.css({ 'fill': pin_config['points'][id]['overColor'] });
+                                    if (pin_config['points'][id]['target'] == 'new_window') {
+                                        window.open(pin_config['points'][id]['url']);
+                                    } else if (pin_config['points'][id]['target'] == 'same_window') {
+                                        window.location.href = pin_config['points'][id]['url'];
+                                    }
+                                })
+                                obj.mousemove(function (e) {
+                                    var x = e.pageX + 10, y = e.pageY + 15;
+                                    var tipw = $('#map-tip').outerWidth(), tiph = $('#map-tip').outerHeight(),
+                                        x = (x + tipw > $(document).scrollLeft() + $(window).width()) ? x - tipw - (20 * 2) : x
+                                    y = (y + tiph > $(document).scrollTop() + $(window).height()) ? $(document).scrollTop() + $(window).height() - tiph - 10 : y
+                                    $('#map-tip').css({ left: x, top: y })
+                                })
+                            }
+                        }
+                        function clear_all() {
+                            for (let path of paths) {
+                                path.mouseout()
+                            }
+                            paths = []
+                        }
+                    </script>
+
+                    <script>$(function () {
+    addEvent('Keg_Cooler'); addEvent('Bulk_Inventory'); addEvent('ACLP_2'); addEvent('LM_Area'); addEvent('Returns'); addEvent('Breakage'); addEvent('Bond_Warehouse'); addEvent('Receiving_Dock'); addEvent('ACLP_1'); addEvent('Charging_Area'); addEvent('PCC_Platform'); addEvent('Can_Crusher'); addEvent('Loading_Dock'); addEvent('Keg_Area');
+                        })</script>
+                    <script>
+                        var map_config = {
+                            'default': { 'borderColor': '#9CA8B6', 'mapShadow': '#fff', 'shadowOpacity': '35', 'hoverShadow': '#666666', 'lakesColor': '#66CCFF', 'namesColor': '#919191', },
+                            'Keg_Cooler': {
+                                'hover': 'Keg Cooler', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Bulk_Inventory': {
+                                'hover': 'Bulk Inventory', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'ACLP_2': {
+                                'hover': 'ACLP #2', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'LM_Area': {
+                                'hover': 'LM Area', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Returns': {
+                                'hover': 'Returns', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Breakage': {
+                                'hover': 'Breakage Area', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Bond_Warehouse': {
+                                'hover': 'Bond Warehouse', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Receiving_Dock': {
+                                'hover': 'Receiving Dock', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'ACLP_1': {
+                                'hover': 'ACLP #1', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            
+                            'Charging_Area': {
+                                'hover': 'Charging Area', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                           
+                            'PCC_Platform': {
+                                'hover': 'PCC Platform', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Can_Crusher': {
+                                'hover': 'Can Crusher', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+                            'Loading_Dock': {
+                                'hover': 'Loading Dock', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+
+                            'Keg_Area': {
+                                'hover': 'Keg Cooler/Processing Area', 'upColor': '#eff9ff', 'overColor': '#D07C00', 'downColor': '#477cb2', 'enable': true,
+                            },
+
+                        }
+
+
+                    </script>
+
+                    <script type="text/javascript">
+                        var pin_config = {
+                            'default': { 'pinShadow': '#000', 'pinShadowOpacity': '50', },
+                            'points': [
+
+                                {
+                                    'shape': 'image',//inventory EAST1
+                                    'hover': '',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 820,
+                                    'pos_Y': 185,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',//receiving2
+                                    'hover': 'no_data',
+                                    'href': 'static/images/ok.gif',
+                                    'pos_X': 550,
+                                    'pos_Y': 30,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                }
+                                ,
+                                {
+                                    'shape': 'image',//can crusher3
+                                    'hover': 'no_data',
+                                    'href': 'static/images/error.gif',
+                                    'pos_X': 1040,
+                                    'pos_Y': 185,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',//bond4
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 130,
+                                    'pos_Y': 185,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',//cooler5
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 660,
+                                    'pos_Y': 200,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                
+                                {
+                                    'shape': 'image', //aclp27
+                                    'hover': 'no_data',
+                                    'href': 'static/images/ok.gif',
+                                    'pos_X': 300,
+                                    'pos_Y': 550,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',  //Loading8
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 400,
+                                    'pos_Y': 680,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',  //LM9
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 80,
+                                    'pos_Y': 590,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',  //ACLP110
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 830,
+                                    'pos_Y': 550,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',  //PCC11
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 600,
+                                    'pos_Y': 590,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',  //returns12
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 640,
+                                    'pos_Y': 380,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                {
+                                    'shape': 'image',  //returns12
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 980,
+                                    'pos_Y': 470,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                },
+                                
+                                {
+                                    'shape': 'image',  //charging14
+                                    'hover': 'no_data',
+                                    'href': 'static/images/no_data.gif',
+                                    'pos_X': 1120,
+                                    'pos_Y': 590,
+                                    'width': 50,
+                                    'height': 38,
+                                    'enable': true,
+                                }
+                                
+                            ]
+                        }
+
+                    </script>
+
+                </div>
+
+
+            </div>
+
+            <div class="modal fade" id="modAddAlarm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span id="lblAlarmNew" style="font-size:24px;font-weight:bold;">5S Checklist and Self Rating</span>
+                            
+
+                        </div>
+
+                        <div class="modal-body">
+                            
+                            <div class="row m-0">
+                                <div class="form-group col" style="padding: 0 0">
+                                    <label for="txtTime">Date:</label>
+                                    <input name="txtDate" type="date" value="2024-11-02" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;txtDate\&#39;,\&#39;\&#39;)&#39;, 0)" onkeypress="if (WebForm_TextBoxKeyHandler(event) == false) return false;" id="txtDate" class="form-control" required="" />
+                                </div>
+                                <div class="form-group col">
+                                    <label for="shift">Shift:</label>
+                                    <select name="shiftddl" onchange="javascript:setTimeout(&#39;__doPostBack(\&#39;shiftddl\&#39;,\&#39;\&#39;)&#39;, 0)" id="shiftddl" class="form-control" required="">
+	<option selected="selected" value="">----Select Shift----</option>
+	<option value="DAY">DAY</option>
+	<option value="AFT">AFT</option>
+	<option value="GYD">GYD</option>
+
+</select>
+                                </div>
+
+                                <div class="form-group col" style="padding: 0 0">
+                                    <label for="txtArea" class="control-label">Zoning Area:</label>
+                                    <input name="txtArea" type="text" id="txtArea" class="form-control" required="" />
+                                    <script>
+                                        $("#txtArea").attr('readonly', true)
+                                    </script>
+                                </div>
+                            </div>
+                            
+                            <div class="row m-0" style="width: 68%;">
+                                <div class="form-group col" style="padding: 0 0">
+                                    <label for="txtOwner">Zone Owner:</label>
+                                    <input name="txtOwner" type="text" value="admin" readonly="readonly" id="txtOwner" class="form-control" required="" />
+                                </div>
+                                <div class="form-group box col" style="margin-top: 28px;">
+                                    <input type="submit" name="btnass" value=" Add Members" id="btnass" class="mt-2 btn btn-success" style="font-family: 'remixicon' !important; font-style: normal;" />
+                                    <span class="number">
+                                        </span>
+                                </div>
+
+                            </div>
+
+
+
+                            1st S/2nd S/3rd S Score(if <span style="color: red">0=Very Bad; </span><span style="color: red">1=Bad; </span><span style="background-color: yellow;">2=Regular;</span><span style="color: green;">3=Good;</span><span style="color: green;">4=Very Good</span>)
+                        <div class="accordion" id="accordionExample">
+                            <div class="card" style="margin-bottom: 0px;">
+
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0" style="display: flex; flex-direction: row; justify-content: space-between;">
+
+                                        <button class="btn btn-link btn-block text-left position-relative" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" title="Click to expand.">
+                                            <span class="glyphicon glyphicon-plus" style="margin-right: 0.5rem;"></span>1‘ S: SORT (SEIRI)
+                                        </button>
+                                        <input name="txt1S" type="number" id="txt1S" class="form-control" placeholder="Score" />/28
+                                    </h2>
+
+                                </div>
+
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>1.Traffic: Does the area have unnecesary elements which interfere with normal traffic?<span style="color: white;">blankblank</span></div>
+                                            <div>
+                                                <input name="txtItem1" type="number" id="txtItem1" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem1" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="valNumbersOnly1" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>2.Materials or supplies: Is there in place any material or thing unnecesary?<span style="color: white;">blankblankblankblank</span></div>
+                                            <div>
+                                                <input name="txtItem2" type="number" id="txtItem2" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem2" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator1" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>3.Tools and equipment: Is there in place any broken equipment (for example: Forklift, Layer pickers, walkie riders, etc)</div>
+                                            <div>
+                                                <input name="txtItem3" type="number" id="txtItem3" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem3" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator2" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>4.Identification: In case of unnecesary items in place, Are these items properly delimited and blocked?</div>
+                                            <div>
+                                                <input name="txtItem4" type="number" id="txtItem4" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem4" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator3" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>5.General Conditions: Picking sectors/ Stageing / Verification Spots: Is there broken product /split outside its breakage bin?Stowing sectors: Are there pallets outside the assigned sectors?Empties/Pallets: Are there pallets, cases outside the assigned sectors?</div>
+                                            <div>
+                                                <input name="txtItem5" type="number" id="txtItem5" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem5" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator12" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>6.Personal Elements: Is there any defined place for personal elements (backpack, clothes, PPE, etc)</div>
+                                            <div>
+                                                <input name="txtItem6" type="number" id="txtItem6" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                             <span data-val-controltovalidate="txtItem6" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator13" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>7.Information: Does the area have OPL, Standards, etc, that are obsolete or damaged?</div>
+                                            <div>
+                                                <input name="txtItem7" type="number" id="txtItem7" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem7" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator14" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <script>
+                                            for (let i = 1; i <= 7; i++) {
+                                                $(`#txtItem${i}`).change(() => {
+                                                    let sum = 0
+                                                    for (let i = 1; i <= 7; i++) {
+                                                        sum += Number.parseInt(0 + $(`#txtItem${i}`).val())
+                                                    }
+                                                    $(`#txt1S`).val(sum)
+                                                    $(`#txt1S`).change()
+                                                })
+                                            }
+
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card" style="margin-bottom: 0px;">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0" style="display: flex; flex-direction: row; justify-content: space-between;">
+                                        <button class="btn btn-link btn-block text-left position-relative" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" title="Click to expand.">
+                                            <span class="glyphicon glyphicon-plus" style="margin-right: 0.5rem;"></span>2’ S: SET IN ORDER (SEITON)
+                                        </button>
+                                        <input name="txt2S" type="number" id="txt2S" class="form-control" placeholder="Score" />/24
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>8.Layout: Is there a clear Layout which shows each zone, equimpent, products, etc?<span style="color: white;">blankblankblankblank</span></div>
+                                            <div>
+                                                <input name="txtItem8" type="number" id="txtItem8" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem8" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator4" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>9.Pedestrian walks: Pedestrian walks, equipments and other important sites are clearly delimited?</div>
+                                            <div>
+                                                <input name="txtItem9" type="number" id="txtItem9" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem9" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator5" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>10.ID: Are there in place 5S Dashboards, 5S OPLs and other information usefull to 5S management?</div>
+                                            <div>
+                                                <input name="txtItem10" type="number" id="txtItem10" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem10" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator6" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>11.Bin: Does the area have box, bins and containers to put waste and byproducts properly standarized?</div>
+                                            <div>
+                                                <input name="txtItem11" type="number" id="txtItem11" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                           <span data-val-controltovalidate="txtItem11" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator7" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                         <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>12.Cleaning toolkit: Does the area have defined a standard site to hold cleaning kit? Is the standard fulfilled?</div>
+                                            <div>
+                                                <input name="txtItem12" type="number" id="txtItem12" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem12" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator15" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                         <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>13.Set : Is the standard layout fulfilled?Checkpoint: Check LayOut actual vs LayOut standar (equipment, products, bins, etc)</div>
+                                            <div>
+                                                <input name="txtItem13" type="number" id="txtItem13" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem13" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator16" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        
+                                        <script>
+                                            for (let i = 8; i <= 13; i++) {
+                                                $(`#txtItem${i}`).change(() => {
+                                                    let sum = 0
+                                                    for (let i = 8; i <= 13; i++) {
+                                                        sum += Number.parseInt(0 + $(`#txtItem${i}`).val())
+                                                    }
+                                                    $(`#txt2S`).val(sum)
+                                                    $(`#txt2S`).change()
+                                                })
+                                            }
+
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card form-group">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0" style="display: flex; flex-direction: row; justify-content: space-between;">
+
+                                        <button class="btn btn-link btn-block text-left position-relative" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree" title="Click to expand.">
+                                            <span class="glyphicon glyphicon-plus" style="margin-right: 0.5rem;"></span>3‘ S: SHINE (SEISO)
+                                        </button>
+                                        <input name="txt3S" type="number" id="txt3S" class="form-control" placeholder="Score" />/24
+                                    </h2>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>14.Floors: Is the floor clean? Check cleaning routine(Plan vs fulfillment) <span style="color: white;">blankblankblankblank</span></div>
+                                            <div>
+                                                <input name="txtItem14" type="number" id="txtItem14" class="form-control" min="0" Max="4" placeholder="" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem14" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator8" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>15.Walls/Roof: Are walls and roof clean?(without spiderwebs) <span style="color: white;">blankblankblankblankblankblank</span></div>
+                                            <div>
+                                                <input name="txtItem15" type="number" id="txtItem15" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem15" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator9" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>16.Windows: Are windows clean? Check broken glasses and other issues <span style="color: white;">blankblankblankblankblankblank</span></div>
+                                            <div>
+                                                <input name="txtItem16" type="number" id="txtItem16" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                           <span data-val-controltovalidate="txtItem16" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator10" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>17.Workshop: Mecanical Workshop: Are all tools in correct place, clean and according to standards?Check Tables, workstations in general: Are they clean, with no dirt, oil, dust, etc?</div>
+                                            <div>
+                                                <input name="txtItem17" type="number" id="txtItem17" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem17" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator11" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                         <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>18.Sanitization: Are there adequate sanitization supplies available as required in H&S protocols? (disinfectants, soap and water, hand sanitizers)Are there cleaning stations in place and signed appropriately?</div>
+                                            <div>
+                                                <input name="txtItem18" type="number" id="txtItem18" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                            <span data-val-controltovalidate="txtItem18" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator17" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                         <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                            <div>19.Cleaning routines: Does the area have a detailed cleaning routine, with roles and responsabilities defined, in a daily, weekly and monthly frequency? Do this include shedules to clean and sanitize areas, teamrooms, workstations, surfaces, equipment, vehicles, etc?</div>
+                                            <div>
+                                                <input name="txtItem19" type="number" id="txtItem19" class="form-control" min="0" Max="4" style="width: 100px;" />
+                                            </div>
+                                           <span data-val-controltovalidate="txtItem19" data-val-focusOnError="t" data-val-errormessage="Only 0~4 allowed." data-val-display="Dynamic" data-val-validationGroup="validatedControls" id="RegularExpressionValidator18" data-val="true" data-val-evaluationfunction="RegularExpressionValidatorEvaluateIsValid" data-val-validationexpression="[0-4](?:\.\d+)?|4(?:\.0+)?" style="color:Red;font-weight:bold;display:none;">Only 0~4 allowed.</span>
+                                        </div>
+                                        <script>
+                                            for (let i = 14; i <= 19; i++) {
+                                                $(`#txtItem${i}`).change(() => {
+                                                    let sum = 0
+                                                    for (let i = 14; i <= 19; i++) {
+                                                        sum += Number.parseInt(0 + $(`#txtItem${i}`).val())
+                                                    }
+                                                    $(`#txt3S`).val(sum)
+                                                    $(`#txt3S`).change()
+                                                })
+                                            }
+
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                for (let i = 1; i <= 3; i++) {
+                                    $(`#txt${i}S`).attr("readonly", true)
+                                    $(`#txt${i}S`).change(() => {
+                                        let sum = 0
+                                        for (let i = 1; i <= 3; i++) {
+                                            sum += Number.parseInt(0 + $(`#txt${i}S`).val())
+                                        }
+                                        $(`#txtsumscore`).val(sum)
+                                    })
+                                }
+                            </script>
+
+                            <label for="txtsumscore" class="control-label">Total Score Out of 76(if score<span style="color: red"><=50:Fail; </span>if score<span style="color: green;">>50:Pass</span>)</label>
+                            <input name="txtsumscore" id="txtsumscore" class="form-control" type="number" />
+                            <script>
+                                $(`#txt5S`).attr("readonly", true)
+                            </script>
+                            <label for="txtComments" class="control-label">Comments</label>
+                            <textarea name="txtComments" rows="2" cols="20" id="txtComments" class="form-control" placeholder="Required if any of 1st/2nd/3rd S Score&lt;=16)">
+</textarea>
+
+                            <span id="lblModalMessage" style="color:Red;"></span>
+                        </div>
+
+
+
+                            
+                            <div class="modal-footer">
+                                <input type="button" name="btnAddAlarm" value="Add" onclick="javascript:__doPostBack(&#39;btnAddAlarm&#39;,&#39;&#39;)" id="btnAddAlarm" class="btn btn-primary button-xs" data-dismiss="modal" />
+                                
+                                <input type="button" name="btnClose" value="Close" onclick="javascript:__doPostBack(&#39;btnClose&#39;,&#39;&#39;)" id="btnClose" class="btn btn-info button-xs" data-dismiss="modal" />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal fade" id="modAddAssistant" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="max-width: fit-content">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span id="Label3">Add Team Members</span>
+                        </div>
+                        <div class="modal-body" style="overflow: auto">
+
+                            <div>
+
+</div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <input type="button" onclick="$('#modAddAssistant').modal('hide');openAddAlarmModal();" class="btn btn-secondary button-xs" value="Close" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="chartmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            5S Weekly Report(WK) 
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="card-body pt-0">
+
+                                <div id="layout2-chart01" class="height-250"></div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="modal-footer">
+                            <input type="button" name="Button1" value="Close" onclick="javascript:__doPostBack(&#39;Button1&#39;,&#39;&#39;)" id="Button1" class="btn btn-info button-xs" data-dismiss="modal" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="chartmodal2" tabindex="-3" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            5S Monthly Report()  
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="card-body pt-0">
+
+                                <div id="layout2-chart02" class="height-250"></div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="modal-footer">
+                            <input type="button" name="Button2" value="Close" onclick="javascript:__doPostBack(&#39;Button2&#39;,&#39;&#39;)" id="Button2" class="btn btn-info button-xs" data-dismiss="modal" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <footer class="mm-footer">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="mr-1">
+                            <p class="mb-2 mb-md-0">&copy; <span id="spanYear">2023</span><a class="font-w600" href="https://www.braining.com.cn/" target="_blank"> BRAINING </a>All rights reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+
+<script>
+    function show_modal(img) {
+        clearTimeout(refffff)
+        $('#txtArea').val(img.id)
+        if ($("#shiftddl").val()==='') {
+            $('#modAddAlarm').modal('show');
+        } else {
+            $("#shiftddl").val('')
+            $("#shiftddl").change()
+        }
+       
+        
+    }
+    $(document).ready(function () {
+        
+        $('.collapse.in').each(function () {
+            $(this).parent().find(".glyphicon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+        });
+
+        $('.collapse').on('shown.bs.collapse', function () {
+            $(this).parent().find(".glyphicon-plus").removeClass("glyphicon-plus").addClass("glyphicon-minus");
+        }).on('hidden.bs.collapse', function () {
+            $(this).parent().find(".glyphicon-minus").removeClass("glyphicon-minus").addClass("glyphicon-plus");
+        });
+    });
+    function selectall(checked) {
+        if (checked)
+            $("#gvCompanies input[type=checkbox]:not(:checked)").click()
+        else
+            $("#gvCompanies input[type=checkbox]:checked").click()
+
+    }
+
+    //var options1 = {
+    //    series: [
+    //        {
+    //            name: '5S_Score',
+    //            data: []
+    //        },
+
+
+    //    ],
+
+    //    chart: {
+    //        type: 'bar',
+    //        height: 350,
+    //        stacked: true,
+    //    },
+    //    stroke: {
+    //        width: 1,
+    //        colors: ['#fff']
+    //    },
+    //    dataLabels: {
+    //        formatter: (val) => {
+    //            return (val / 1000).toFixed(1) + 'K'
+    //        }
+    //    },
+    //    plotOptions: {
+    //        bar: {
+    //            horizontal: false
+    //        }
+    //    },
+    //    xaxis: {
+    //        categories: []
+    //    },
+    //    fill: {
+    //        opacity: 1
+    //    },
+    //    colors: ['#008FFB', '#00E396'],
+    //    yaxis: {
+    //        labels: {
+    //            formatter: (val) => {
+    //                return val / 1000 + 'K'
+    //            }
+    //        }
+    //    },
+    //    legend: {
+    //        position: 'top',
+    //        horizontalAlign: 'left'
+    //    }
+
+    //};
+
+    //var chart = new ApexCharts(document.querySelector("#chart-page-2"), options1);
+    //chart.render();
+
+    var options2 = {     //downtime
+        series: [{
+            name: 'Mon',
+            data: []
+        }, {
+                name: 'Tue',
+                data: []
+            }, {
+                name: 'Wed',
+                data: []
+            }, {
+                name: 'Thu',
+                data: []
+            }, {
+                name: 'Fri',
+                data: []
+            }, {
+                name: 'Sat',
+                data: []
+            }, {
+                name: 'Sun',
+                data: []
+            }],
+        colors: ['#FEB019', '#555555', '#00E396', '#FF4560', '#194f97', '#9c9800', '#A285BE'],
+        //194f97 - 555555 - bd6b08 - 00686b - c82d31 - 625ba1 - 898989 - 9c9800 - 007f54 - a195c5 - 103667 - f19272
+
+   
+        chart: {
+            height: 350,
+            type: 'bar'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: []
+        }
+    };
+
+
+    var chart = new ApexCharts(document.querySelector("#layout2-chart01"), options2);
+    chart.render();
+
+    var options3 = {     //downtime
+        series: [{
+            name: "WK",
+            data: []
+        }, {
+            name: "WK",
+            data: []
+        }, {
+            name: "WK",
+            data: []
+        }, {
+            name: "WK",
+            data: []
+        }, {
+            name: "WK",
+            data: []
+        }],
+        colors: ['#FEB019', '#555555', '#00E396', '#FF4560', '#194f97', '#9c9800', '#A285BE'],
+        //194f97 - 555555 - bd6b08 - 00686b - c82d31 - 625ba1 - 898989 - 9c9800 - 007f54 - a195c5 - 103667 - f19272
+
+
+        chart: {
+            height: 280,
+            type: 'bar'
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: []
+        },
+    };
+
+
+    var chart = new ApexCharts(document.querySelector("#layout2-chart02"), options3);
+    chart.render();
+</script>
+
+
+<script src="static/js/customizer.js"></script>
+<script src="static/js/app.js"></script>
+
+</html>
+
